@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import axios from 'axios'
 
-const value = ref();
+const value = ref<string>();
 
 
 </script>
@@ -11,8 +11,8 @@ const value = ref();
   <h1 class="text-red-600 text-bold">KOKOS</h1>
   <div class="flex flex-column gap-2">
     <label for="username">Email</label>
-    <InputText id="username" v-model="value" aria-describedby="username-help" />
-    <small id="username-help">Enter your username to reset your password.</small>
+    <InputText id="password" v-model="value" aria-describedby="password-help" />
+    <small id="password">Enter your username to reset your password.</small>
   </div>
   <Button label="Submit" />
 </template>

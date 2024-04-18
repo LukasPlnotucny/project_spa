@@ -15,7 +15,6 @@ export function callAxios(
         withCredentials: true,
         withXSRFToken: true,
     }).catch(error => {
-        console.log(error)
         throw error
     })
 }

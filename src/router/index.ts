@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import {useAuthStore} from "@/stores/auth";
-import {storeToRefs} from "pinia";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +14,8 @@ const router = createRouter({
     {
       path: '/reset-password',
       name: 'reset.password',
-      component: () => import('../views/auth/ResetPassword.vue')
+      component: () => import('../views/auth/ResetPassword.vue'),
+      meta: {auth: true}
     },
     {
       path: '/login',
@@ -25,18 +25,15 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(to => {
+router.beforeEach(async (to) => {
   const auth = useAuthStore()
-  const { currentUser } = storeToRefs(auth)
 
-  console.log('AKTUAL: ', auth.authenticated)
-  if ( !auth.authenticated && to.name !== 'login') {
-    return {name: 'login'}
-  }
+  await auth.getAuthenticatedUser()
+
+  if (to.meta.auth && ! auth.authenticated) return { name: 'login' }
+
+  if (auth.authenticated && to.name === 'login') return router.back()
 
 })
-
-
-
 
 export default router
