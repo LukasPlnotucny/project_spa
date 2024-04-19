@@ -32,11 +32,6 @@ export const useAuthStore = defineStore('user', () => {
             })
     }
 
-    function resetPassword()
-    {
-        callAxios('/reset-password', Method.POST)
-    }
-
 
     function logout()
     {
