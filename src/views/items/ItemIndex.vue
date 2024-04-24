@@ -5,25 +5,25 @@ import {onMounted, onUpdated, ref} from "vue";
 
 const orders = ref()
 
-function getOrders(): void
+function getItems(): void
 {
-  callAxios('/api/orders')
+  callAxios('/api/items')
       ?.then(response => {
         orders.value = response.data.data
       })
 }
 
-onMounted(getOrders)
-onUpdated(getOrders)
+onMounted(getItems)
+onUpdated(getItems)
+
 </script>
 
 <template>
 
   <DataTable :value="orders" tableStyle="min-width: 50rem">
     <PrimeColumn field="id" header="#"></PrimeColumn>
-    <PrimeColumn field="number" header="Number"></PrimeColumn>
-    <PrimeColumn field="due_date" header="Due date"></PrimeColumn>
-    <PrimeColumn field="paid_date" header="Paid date"></PrimeColumn>
+    <PrimeColumn field="name" header="Name"></PrimeColumn>
+    <PrimeColumn field="price" header="Price"></PrimeColumn>
   </DataTable>
 
 </template>
