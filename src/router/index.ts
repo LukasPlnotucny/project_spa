@@ -35,6 +35,12 @@ const router = createRouter({
       meta: {auth: true}
     },
     {
+      path: '/orders/create',
+      name: 'orders.create',
+      component: () => import('../views/orders/OrderCreate.vue'),
+      meta: {auth: true}
+    },
+    {
       path: '/items',
       name: 'items.index',
       component: () => import('../views/items/ItemIndex.vue'),

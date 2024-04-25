@@ -3,6 +3,7 @@ import PrimeVue from 'primevue/config';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputNumber from 'primevue/inputnumber';
+import Calendar from 'primevue/calendar';
 
 import 'primevue/resources/themes/saga-green/theme.css'
 import { createApp } from 'vue'
@@ -25,5 +26,6 @@ app.component('FloatLabel', FloatLabel)
 app.component('DataTable', DataTable)
 app.component('PrimeColumn', Column)
 app.component('InputNumber', InputNumber)
+app.component('InputDate', Calendar)
 
 app.mount('#app')

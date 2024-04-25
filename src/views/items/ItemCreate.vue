@@ -12,7 +12,8 @@ const defaultForm = {name: '', price: 0}
 const data = ref<ItemFormInterface>({...defaultForm})
 
 function createItem() {
-  callAxios('/api/items', Method.POST, data)
+  console.log("POSIELAM: ", data.value)
+  callAxios('/api/items', Method.POST, data.value)
       .catch(err => {
         console.log(err)
       })
@@ -30,7 +31,3 @@ function createItem() {
     <Button label="Submit" type="submit"/>
   </form>
 </template>
-
-<style scoped>
-
-</style>
