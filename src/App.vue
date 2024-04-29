@@ -12,7 +12,7 @@ import SideBar from "@/components/SideBar.vue";
     <div class="flex-1">
 
 
-      <div class="flex flex-col bg-gray-100 mt-[70px] min-h-[calc(100vh-70px)]">
+      <div class="flex flex-col bg-gray-100 min-h-[calc(100vh-70px)]">
 
         <RouterView />
 

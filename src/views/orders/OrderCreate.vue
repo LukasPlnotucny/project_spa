@@ -1,35 +1,29 @@
 <script setup lang="ts">
+import type { Order, CreateOrderForm} from "@/interfaces/order";
+import type { ItemFormInterface, Item } from "@/interfaces/item";
 
 import { ref } from "vue";
-
 import { useItemsStore } from "@/stores/items";
-import {storeToRefs} from "pinia";
-import {callAxios, Method} from "@/axios/callAxios";
-
-interface OrderFormInterface {
-  due_date: string,
-  items: []
-}
+import { storeToRefs } from "pinia";
+import { callAxios, Method } from "@/axios/callAxios";
 
 const itemsStore = useItemsStore()
 const { items } = storeToRefs(itemsStore)
 
 itemsStore.getItems()
 
+const defaultForm = { items: [] }
 
-const defaultForm = {due_date: '1983-02-14', items: []}
-
-const data = ref({...defaultForm})
+const data = ref<CreateOrderForm>({...defaultForm})
 const errors = ref<object>({})
 
-function createOrder() {
-  items.value.forEach(function (item) {
+function createOrder(): void
+{
+  items.value.forEach(function (item: Item) {
     if (item.quantity !== 0) data.value.items.push(item)
   })
 
-  console.log("Vysledok: ", data.value)
-
-  callAxios('/api/orders', Method.POST, data)
+  callAxios('/api/orders', Method.POST, data.value)
       .catch(err => {
         console.log(err)
       })
@@ -39,11 +33,10 @@ function createOrder() {
 
 <template>
   <form @submit.prevent="createOrder">
-    <label>Due date</label>
-    <InputDate v-model="data.due_date" />
+    <h1>ITEMS</h1>
 
     <div class="flex-col">
-      <div v-for="item in items" v-bind="item">
+      <div v-for="item in items" :key="item.id">
         <h1>{{item.name}}</h1>
         <span>{{item.price}}</span>
         <br>
@@ -56,7 +49,3 @@ function createOrder() {
     <Button label="Submit" type="submit"/>
   </form>
 </template>
-
-<style scoped>
-
-</style>

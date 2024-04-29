@@ -41,6 +41,12 @@ const router = createRouter({
       meta: {auth: true}
     },
     {
+      path: '/orders/edit/:id',
+      name: 'orders.edit',
+      component: () => import('../views/orders/OrderEdit.vue'),
+      meta: {auth: true}
+    },
+    {
       path: '/items',
       name: 'items.index',
       component: () => import('../views/items/ItemIndex.vue'),

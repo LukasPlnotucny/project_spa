@@ -2,6 +2,7 @@
 
 import { callAxios } from "@/axios/callAxios";
 import {onMounted, onUpdated, ref} from "vue";
+import {resolveEnvPrefix} from "vite";
 
 const orders = ref()
 
@@ -9,12 +10,12 @@ function getOrders(): void
 {
   callAxios('/api/orders')
       ?.then(response => {
+        console.log(response.data.data)
         orders.value = response.data.data
       })
 }
 
 onMounted(getOrders)
-onUpdated(getOrders)
 </script>
 
 <template>
