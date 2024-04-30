@@ -3,6 +3,7 @@
 import { callAxios } from "@/axios/callAxios";
 import {onMounted, onUpdated, ref} from "vue";
 import {resolveEnvPrefix} from "vite";
+import PageContent from "@/components/PageContent.vue";
 
 const orders = ref()
 
@@ -20,11 +21,25 @@ onMounted(getOrders)
 
 <template>
 
-  <DataTable :value="orders" tableStyle="min-width: 50rem">
-    <PrimeColumn field="id" header="#"></PrimeColumn>
-    <PrimeColumn field="number" header="Number"></PrimeColumn>
-    <PrimeColumn field="due_date" header="Due date"></PrimeColumn>
-    <PrimeColumn field="paid_date" header="Paid date"></PrimeColumn>
-  </DataTable>
+  <PageContent header="Orders">
+
+    <LayoutCard class="w-full">
+
+      <template #content>
+
+        <div class="w-full">
+          <DataTable :value="orders" stripedRows paginator :rows="5" >
+            <PrimeColumn field="id" header="#"></PrimeColumn>
+            <PrimeColumn field="number" header="Number"></PrimeColumn>
+            <PrimeColumn field="due_date" header="Due date"></PrimeColumn>
+            <PrimeColumn field="paid_date" header="Paid date"></PrimeColumn>
+          </DataTable>
+        </div>
+
+      </template>
+
+    </LayoutCard>
+
+  </PageContent>
 
 </template>

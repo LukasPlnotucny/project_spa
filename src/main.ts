@@ -4,6 +4,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputNumber from 'primevue/inputnumber';
 import Calendar from 'primevue/calendar';
+import Card from "primevue/card";
 
 import 'primevue/resources/themes/saga-green/theme.css'
 import { createApp } from 'vue'
@@ -27,5 +28,6 @@ app.component('DataTable', DataTable)
 app.component('PrimeColumn', Column)
 app.component('InputNumber', InputNumber)
 app.component('InputDate', Calendar)
+app.component('LayoutCard', Card)
 
 app.mount('#app')

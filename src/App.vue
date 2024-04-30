@@ -5,14 +5,14 @@ import SideBar from "@/components/SideBar.vue";
 
 <template>
 
-  <div class="flex">
+  <div class="flex h-screen">
 
     <SideBar/>
 
     <div class="flex-1">
 
 
-      <div class="flex flex-col bg-gray-100 min-h-[calc(100vh-70px)]">
+      <div class="flex-1 ml-24 p-4">
 
         <RouterView />
 
