@@ -3,13 +3,12 @@ export interface Item {
     name: string;
     price: number;
     vat: number;
-    price_with_vat: number;
-    quantity: number
+    quantity?: number
 }
 
 export interface ItemFormInterface {
     name: string;
     price: number;
     vat: number;
-    quantity: number;
+    quantity?: number;
 }

@@ -57,6 +57,12 @@ const router = createRouter({
       name: 'items.create',
       component: () => import('../views/items/ItemCreate.vue'),
       meta: {auth: true}
+    },
+    {
+      path: '/items/edit/:id',
+      name: 'items.edit',
+      component: () => import('../views/items/ItemEdit.vue'),
+      meta: {auth: true}
     }
 
   ]

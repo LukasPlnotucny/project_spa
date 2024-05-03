@@ -2,13 +2,14 @@
 import {ref} from "vue";
 import {callAxios, Method} from "@/axios/callAxios";
 import PageContent from "@/components/PageContent.vue";
+import ItemForm from "@/views/items/components/ItemForm.vue";
 
 interface ItemFormInterface {
   name: string,
   price: number
 }
 
-const defaultForm = {name: '', price: 0}
+const defaultForm = {name: '', price: 0, vat: 0}
 
 const data = ref<ItemFormInterface>({...defaultForm})
 
@@ -27,17 +28,12 @@ function createItem() {
 
     <LayoutCard class="w-full">
 
-      <template #content>
-        <div class="flex flex-col">
-          <div class="flex">
-            <label>Name</label>
-            <InputText id="password" v-model="data.name" aria-describedby="password-help" />
-            <label>Price</label>
-            <InputNumber id="current_confirmation" v-model="data.price" aria-describedby="password-help" />
+      <template #title>
+        <h1>TOTOTOTOTOO</h1>
+      </template>
 
-            <Button label="Submit" type="submit"/>
-          </div>
-        </div>
+      <template #content>
+        <ItemForm :item="data"/>
       </template>
 
     </LayoutCard>
