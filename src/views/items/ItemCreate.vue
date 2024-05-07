@@ -3,24 +3,23 @@ import {ref} from "vue";
 import {callAxios, Method} from "@/axios/callAxios";
 import PageContent from "@/components/PageContent.vue";
 import ItemForm from "@/views/items/components/ItemForm.vue";
+import type {Errors} from "@/interfaces/interfaces";
 
 interface ItemFormInterface {
   name: string,
   price: number
 }
 
-const defaultForm = {name: '', price: 0, vat: 0}
+const errors = ref<Errors>()
 
-const data = ref<ItemFormInterface>({...defaultForm})
-
-function createItem() {
-  console.log("POSIELAM: ", data.value)
-  callAxios('/api/items', Method.POST, data.value)
-      .catch(err => {
-        console.log(err)
+function createItem(data: ItemFormInterface): void
+{
+  callAxios('/api/items', Method.POST, data)
+      .then(() => errors.value = {})
+      .catch(errorResponse => {
+        errors.value = errorResponse.response.data.errors
       })
 }
-
 </script>
 
 <template>
@@ -29,11 +28,13 @@ function createItem() {
     <LayoutCard class="w-full">
 
       <template #title>
-        <h1>TOTOTOTOTOO</h1>
+        <h1>New Item</h1>
       </template>
 
       <template #content>
-        <ItemForm :item="data"/>
+
+        <ItemForm :errors="errors" @submit="createItem"/>
+
       </template>
 
     </LayoutCard>

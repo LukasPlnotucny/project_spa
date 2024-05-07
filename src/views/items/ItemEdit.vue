@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {onMounted, onUpdated, ref} from "vue";
 import {callAxios, Method} from "@/axios/callAxios";
 import PageContent from "@/components/PageContent.vue";
 import ItemForm from "@/views/items/components/ItemForm.vue";
 import {useRoute} from "vue-router";
-import type {ItemFormInterface} from "@/interfaces/item";
+import type { ItemFormInterface } from "@/interfaces/item";
 import type {Errors} from "@/interfaces/interfaces";
 const route = useRoute()
 
 const errors = ref<Errors>()
 
-const defaultForm = {name: '', price: 0, vat: 0}
-
-const data = ref<ItemFormInterface>({...defaultForm})
+const data = ref<ItemFormInterface>()
 
 function getItemByIt(): void
 {
@@ -22,15 +20,16 @@ function getItemByIt(): void
       })
 }
 
-function updateItem(): void
+function updateItem(data: ItemFormInterface): void
 {
-  callAxios(`/api/items/${route.params.id}`, Method.PUT, data.value)
+  callAxios(`/api/items/${route.params.id}`, Method.PUT, data)
       .catch(err => {
         errors.value = err.response.data.errors
       })
 }
 
 onMounted(getItemByIt)
+onUpdated(getItemByIt)
 </script>
 
 <template>
@@ -40,7 +39,7 @@ onMounted(getItemByIt)
 
       <template #title>
         <div class="flex flex-row">
-          <h1>{{ data.name }}</h1>
+          <h1>{{ data?.name }}</h1>
 
           <div class="ms-auto">
             <RouterLink :to="{ name: 'items.index' }">
@@ -55,7 +54,7 @@ onMounted(getItemByIt)
       </template>
 
       <template #content>
-        <ItemForm :item="data" @submit="updateItem" :errors="errors"/>
+        <ItemForm  v-if="data" :item="data" :errors="errors" @submit="updateItem" />
       </template>
 
     </LayoutCard>

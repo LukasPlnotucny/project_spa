@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import type { Errors } from "@/interfaces/interfaces";
+interface Props {
+  errors?: string[];
+}
 
-const props = defineProps<Errors>()
+const props = defineProps<Props>()
+
 </script>
 
 <template>
   <div class="text-red-500 break-all flex flex-col">
-    <span v-for="error in props.erros" :key="error">
+    <span v-for="error in props.errors" :key="error">
       {{ error }}
     </span>
   </div>
