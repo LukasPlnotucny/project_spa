@@ -8,35 +8,25 @@ import {storeToRefs} from "pinia";
 import {useItemsStore} from "@/stores/items";
 import type { Item } from "@/interfaces/item";
 import type { EditOrderForm } from "@/interfaces/order";
+import PageContent from "@/components/PageContent.vue";
+import OrderForm from "@/views/orders/components/OrderForm.vue";
 
 const route = useRoute()
 const itemsStore = useItemsStore()
 
-const defaultForm = {}
-const data = ref<EditOrderForm>({})
-const { items } = storeToRefs(itemsStore)
-
-const decreaseQuantity = ( item: Item ) => item.quantity = item.quantity > 0 ? item.quantity - 1 : item.quantity
-const increaseQuantity = ( item: Item ) => item.quantity++
+const data = ref<EditOrderForm>()
 
 function getOrderById(): void
 {
   callAxios(`/api/orders/${route.params.id}`)
       .then(response => {
-        console.log(response.data.data)
         data.value = response.data.data
       })
 }
 
-function updateOrder(): void
+function updateOrder(data: EditOrderForm): void
 {
-  items.value.forEach(function (item) {
-    if (item.quantity !== 0) data.value.items.push(item)
-  })
-
-  console.log(data.value)
-
-  callAxios(`/api/orders/${route.params.id}`, Method.PUT, data.value)
+  callAxios(`/api/orders/${route.params.id}`, Method.PUT, data)
       .catch(err => {
         console.log(err)
       })
@@ -47,24 +37,23 @@ onMounted(getOrderById)
 
 <template>
 
-  <form @submit.prevent="updateOrder">
-    <label>Due date</label>
-    <h1>{{data.number}}</h1>
-<!--    <InputDate v-model="data.due_date" />-->
+  <PageContent header="Item create">
 
-    <div class="flex-col">
-      <div v-for="item in data.items" v-bind="item">
-        <h1>{{item.name}}</h1>
-        <span>{{item.price}}</span>
-        <br>
-        <span>COUNT: {{item.quantity}}</span>
-        <Button @click="increaseQuantity(item)">Add item</Button>
-        <Button @click="decreaseQuantity(item)">Remove item</Button>
-        <hr>
-      </div>
-    </div>
+    <LayoutCard class="w-full">
 
-    <Button label="Submit" type="submit"/>
-  </form>
+      <template #title>
+        <h1>Order number: {{ data?.number }}</h1>
+      </template>
+
+      <template #content>
+
+        <OrderForm v-if="data" :order="data" @submit="updateOrder"/>
+
+      </template>
+
+
+    </LayoutCard>
+
+  </PageContent>
 
 </template>

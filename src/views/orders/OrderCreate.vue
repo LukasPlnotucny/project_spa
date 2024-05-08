@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { Order, CreateOrderForm} from "@/interfaces/order";
-import type { ItemFormInterface, Item } from "@/interfaces/item";
+import type {ItemFormInterface, Item, ItemOrder} from "@/interfaces/item";
 
 import { ref } from "vue";
 import { useItemsStore } from "@/stores/items";
 import { storeToRefs } from "pinia";
 import { callAxios, Method } from "@/axios/callAxios";
+import PageContent from "@/components/PageContent.vue";
+import ItemForm from "@/views/items/components/ItemForm.vue";
+import OrderForm from "@/views/orders/components/OrderForm.vue";
 
 const itemsStore = useItemsStore()
 const { items } = storeToRefs(itemsStore)
@@ -19,11 +22,14 @@ const errors = ref<object>({})
 
 function createOrder(): void
 {
-  items.value.forEach(function (item: Item) {
+  items.value.forEach((item: Item) =>  {
     if (item.quantity !== 0) data.value.items.push(item)
   })
 
   callAxios('/api/orders', Method.POST, data.value)
+      .then(() => {
+        data.value.items = []
+      })
       .catch(err => {
         console.log(err)
       })
@@ -32,20 +38,24 @@ function createOrder(): void
 </script>
 
 <template>
-  <form @submit.prevent="createOrder">
-    <h1>ITEMS</h1>
 
-    <div class="flex-col">
-      <div v-for="item in items" :key="item.id">
-        <h1>{{item.name}}</h1>
-        <span>{{item.price}}</span>
-        <br>
-        <span>COUNT: {{item.quantity}}</span>
-        <Button @click="item.quantity++">Add item</Button>
-        <hr>
-      </div>
-    </div>
+  <PageContent header="Item create">
 
-    <Button label="Submit" type="submit"/>
-  </form>
+    <LayoutCard class="w-full">
+
+      <template #title>
+        <h1>New Order</h1>
+      </template>
+
+      <template #content>
+
+        <OrderForm :errors="errors" @submit="createOrder"/>
+
+      </template>
+
+
+    </LayoutCard>
+
+  </PageContent>
+
 </template>

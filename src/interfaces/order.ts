@@ -1,4 +1,4 @@
-import type { Item } from "@/interfaces/item";
+import type {Item, ItemOrder} from "@/interfaces/item";
 
 export interface Order {
     id: number;
@@ -11,7 +11,8 @@ export interface Order {
 }
 
 export interface CreateOrderForm {
-    items: Item[];
+    number?: string
+    items: ItemOrder[];
 }
 
 export interface EditOrderForm {

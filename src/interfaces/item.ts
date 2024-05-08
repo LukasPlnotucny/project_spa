@@ -12,3 +12,11 @@ export interface ItemFormInterface {
     vat: number;
     quantity?: number;
 }
+
+export interface ItemOrder {
+    id: number;
+    name: string;
+    price: number;
+    vat: number;
+    quantity: number
+}

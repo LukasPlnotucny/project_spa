@@ -5,6 +5,7 @@ import Column from 'primevue/column';
 import InputNumber from 'primevue/inputnumber';
 import Calendar from 'primevue/calendar';
 import Card from "primevue/card";
+import Dropdown from 'primevue/dropdown';
 
 import 'primevue/resources/themes/saga-green/theme.css'
 import { createApp } from 'vue'
@@ -29,5 +30,6 @@ app.component('PrimeColumn', Column)
 app.component('PrimeInputNumber', InputNumber)
 app.component('InputDate', Calendar)
 app.component('LayoutCard', Card)
+app.component('SelectInput', Dropdown)
 
 app.mount('#app')
