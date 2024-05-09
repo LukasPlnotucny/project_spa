@@ -10,19 +10,22 @@ export const useAuthStore = defineStore('user', () => {
 
     const authenticated = ref<boolean>(false)
     const redirect = ref<RouteLocationRaw>('/')
-    const checkingIfAuthenticated = ref<boolean>(false)
+    const isPreloading = ref<boolean>(false)
 
     const currentUser = ref<User | null>(null)
 
     const setRedirect = (value: string) => redirect.value = value
-    const setCheckingIfAuthenticated = () => checkingIfAuthenticated.value = true
-    const unsetCheckingIfAuthenticated = () => checkingIfAuthenticated.value = false
     const setCurrentUser = (data: User | null) => currentUser.value = data
     const setAuthenticated = () => authenticated.value = true
     const unsetAuthenticated = () => authenticated.value = false
 
+    const setPreloading = () => isPreloading.value = true
+    const unsetPreloading = () => isPreloading.value = false
+
     async function getAuthenticatedUser()
     {
+        setPreloading()
+
         await callAxios('/api/user')
             .then(res => {
                 setCurrentUser(res.data.data)
@@ -30,15 +33,19 @@ export const useAuthStore = defineStore('user', () => {
             }).catch(() => {
                 console.log("ERROR")
             })
+
+        unsetPreloading()
     }
 
 
-    function logout()
+    function logout(): void
     {
+        isPreloading.value = true
         callAxios('/logout', Method.POST)
             .then(() => {
                 setCurrentUser(null)
                 unsetAuthenticated()
+                isPreloading.value = false
                 redirect.value = '/'
                 router.push({ name: 'login' })
             })
@@ -68,5 +75,8 @@ export const useAuthStore = defineStore('user', () => {
     }
 
 
-    return { authenticated, currentUser, login, getAuthenticatedUser, setRedirect, logout }
+    return {
+        authenticated, currentUser, isPreloading ,
+        login, setPreloading, unsetPreloading, getAuthenticatedUser, setRedirect, logout
+    }
 })
