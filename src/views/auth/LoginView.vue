@@ -2,6 +2,8 @@
 import {useAuthStore} from "@/stores/auth";
 import {reactive, ref} from "vue";
 
+import InputText from '@/components/Form/InputText.vue'
+
 const auth = useAuthStore()
 
 const data = reactive({

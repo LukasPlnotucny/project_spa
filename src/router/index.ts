@@ -25,7 +25,44 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: () => import('../views/auth/ProfileView.vue')
+      component: () => import('../views/auth/ProfileView.vue'),
+      meta: {auth: true}
+    },
+    {
+      path: '/orders',
+      name: 'orders.index',
+      component: () => import('../views/orders/OrderIndex.vue'),
+      meta: {auth: true}
+    },
+    {
+      path: '/orders/create',
+      name: 'orders.create',
+      component: () => import('../views/orders/OrderCreate.vue'),
+      meta: {auth: true}
+    },
+    {
+      path: '/orders/edit/:id',
+      name: 'orders.edit',
+      component: () => import('../views/orders/OrderEdit.vue'),
+      meta: {auth: true}
+    },
+    {
+      path: '/items',
+      name: 'items.index',
+      component: () => import('../views/items/ItemIndex.vue'),
+      meta: {auth: true}
+    },
+    {
+      path: '/items/create',
+      name: 'items.create',
+      component: () => import('../views/items/ItemCreate.vue'),
+      meta: {auth: true}
+    },
+    {
+      path: '/items/edit/:id',
+      name: 'items.edit',
+      component: () => import('../views/items/ItemEdit.vue'),
+      meta: {auth: true}
     }
 
   ]
