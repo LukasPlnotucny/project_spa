@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {onMounted, onUpdated, ref} from "vue";
-import {callAxios, Method} from "@/axios/callAxios";
+import { onMounted, onUpdated, ref } from "vue";
+import { callAxios, Method } from "@/axios/callAxios";
 import PageContent from "@/components/PageContent.vue";
 import ItemForm from "@/views/items/components/ItemForm.vue";
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 import type { ItemFormInterface } from "@/interfaces/item";
-import type {Errors} from "@/interfaces/interfaces";
+import type { Errors } from "@/interfaces/interfaces";
 const route = useRoute()
 
 const errors = ref<Errors>()

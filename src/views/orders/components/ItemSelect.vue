@@ -24,18 +24,21 @@ const totalPriceWithVat = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-row gap-8 justify-between mt-2 w-full" v-if="item.quantity > 0">
-    <span>{{ item.name }}</span>
-    <span>{{ totalPrice }}</span>
-    <span>{{ totalPriceWithVat }}</span>
-    <div class="w-14 h-8 bg-red-700 text-white" @click="item.quantity = 0">Delete</div>
-    <PrimeInputNumber v-model="item.quantity" showButtons buttonLayout="horizontal" style="width: 3rem" :min="0">
-      <template #incrementbuttonicon>
-        +
-      </template>
-      <template #decrementbuttonicon>
-        -
-      </template>
-    </PrimeInputNumber>
-  </div>
+  <slot>
+    <div class="flex flex-row gap-8 justify-between mt-2 w-full" v-if="item.quantity > 0">
+      <span>{{ item.name }}</span>
+      <span>{{ totalPrice }}</span>
+      <span>{{ totalPriceWithVat }}</span>
+      <div class="w-14 h-8 bg-red-700 text-white" @click="item.quantity = 0">Delete</div>
+      <PrimeInputNumber v-model="item.quantity" showButtons buttonLayout="horizontal" style="width: 3rem" :min="0">
+        <template #incrementbuttonicon>
+          +
+        </template>
+        <template #decrementbuttonicon>
+          -
+        </template>
+      </PrimeInputNumber>
+    </div>
+  </slot>
+
 </template>

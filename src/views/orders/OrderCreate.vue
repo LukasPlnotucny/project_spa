@@ -1,37 +1,18 @@
 <script setup lang="ts">
-import type { Order, CreateOrderForm} from "@/interfaces/order";
-import type {ItemFormInterface, Item, ItemOrder} from "@/interfaces/item";
-
+import type { OrderFormInterface } from "@/interfaces/order";
 import { ref } from "vue";
-import { useItemsStore } from "@/stores/items";
-import { storeToRefs } from "pinia";
 import { callAxios, Method } from "@/axios/callAxios";
 import PageContent from "@/components/PageContent.vue";
-import ItemForm from "@/views/items/components/ItemForm.vue";
 import OrderForm from "@/views/orders/components/OrderForm.vue";
+import type { Errors } from "@/interfaces/interfaces";
 
-const itemsStore = useItemsStore()
-const { items } = storeToRefs(itemsStore)
+const errors = ref<Errors>()
 
-itemsStore.getItems()
-
-const defaultForm = { items: [] }
-
-const data = ref<CreateOrderForm>({...defaultForm})
-const errors = ref<object>({})
-
-function createOrder(): void
+function createOrder(data: OrderFormInterface): void
 {
-  items.value.forEach((item: Item) =>  {
-    if (item.quantity !== 0) data.value.items.push(item)
-  })
-
-  callAxios('/api/orders', Method.POST, data.value)
-      .then(() => {
-        data.value.items = []
-      })
+  callAxios('/api/orders', Method.POST, data)
       .catch(err => {
-        console.log(err)
+        errors.value = err.response.data.errors
       })
 }
 

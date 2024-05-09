@@ -10,12 +10,7 @@ export interface Order {
     items?: Item[];
 }
 
-export interface CreateOrderForm {
+export interface OrderFormInterface {
     number?: string
     items: ItemOrder[];
-}
-
-export interface EditOrderForm {
-    number: string;
-    items: Item[];
 }

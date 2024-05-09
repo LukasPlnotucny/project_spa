@@ -1,20 +1,18 @@
 <script setup lang="ts">
-
-
 import {callAxios, Method} from "@/axios/callAxios";
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
-import {storeToRefs} from "pinia";
-import {useItemsStore} from "@/stores/items";
-import type { Item } from "@/interfaces/item";
-import type { EditOrderForm } from "@/interfaces/order";
+import type {OrderFormInterface} from "@/interfaces/order";
 import PageContent from "@/components/PageContent.vue";
 import OrderForm from "@/views/orders/components/OrderForm.vue";
+import type {Errors} from "@/interfaces/interfaces";
+import router from "@/router";
 
 const route = useRoute()
-const itemsStore = useItemsStore()
 
-const data = ref<EditOrderForm>()
+const errors = ref<Errors>()
+
+const data = ref<OrderFormInterface>()
 
 function getOrderById(): void
 {
@@ -24,11 +22,15 @@ function getOrderById(): void
       })
 }
 
-function updateOrder(data: EditOrderForm): void
+function updateOrder(data: OrderFormInterface): void
 {
   callAxios(`/api/orders/${route.params.id}`, Method.PUT, data)
+      .then(() => {
+        errors.value = {}
+        router.push({name: 'orders.index'})
+      })
       .catch(err => {
-        console.log(err)
+        errors.value = err.response.data.errors
       })
 }
 
@@ -47,7 +49,7 @@ onMounted(getOrderById)
 
       <template #content>
 
-        <OrderForm v-if="data" :order="data" @submit="updateOrder"/>
+        <OrderForm v-if="data" :order="data" :errors="errors" @submit="updateOrder"/>
 
       </template>
 
