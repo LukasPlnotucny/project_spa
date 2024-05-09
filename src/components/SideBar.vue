@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import {useAuthStore} from "@/stores/auth";
+
+const auth = useAuthStore()
+
 
 </script>
 
@@ -11,6 +15,7 @@
       <h1 class="text-sidebar-text-color leading-8">dsdsdsd</h1>
       <h1 class="text-sidebar-text-color leading-8">dsdsdsd</h1>
       <h1 class="text-sidebar-text-color leading-8">ddsdsdsd</h1>
+      <Button label="Logout" severity="secondary" class="ms-2" @click="auth.logout()" />
     </div>
   </div>
 </template>

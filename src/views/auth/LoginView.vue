@@ -3,6 +3,7 @@ import {useAuthStore} from "@/stores/auth";
 import {reactive, ref} from "vue";
 
 import InputText from '@/components/Form/InputText.vue'
+import Preloader from "@/components/PreLoader.vue";
 
 const auth = useAuthStore()
 
@@ -14,6 +15,9 @@ const data = reactive({
 </script>
 
 <template>
+
+  <Preloader :preloading="auth.isPreloading"/>
+
   <div
       class="relative mx-auto w-full max-w-md bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10 flex justify-center">
     <div class="w-full">
