@@ -47,6 +47,12 @@ const router = createRouter({
       meta: {auth: true}
     },
     {
+      path: '/orders/:id/items',
+      name: 'orders.items',
+      component: () => import('../views/orders/OrderItems.vue'),
+      meta: {auth: true}
+    },
+    {
       path: '/items',
       name: 'items.index',
       component: () => import('../views/items/ItemIndex.vue'),

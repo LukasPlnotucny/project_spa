@@ -5,19 +5,23 @@ import {onMounted, onUpdated, ref} from "vue";
 import {resolveEnvPrefix} from "vite";
 import PageContent from "@/components/PageContent.vue";
 import OrdersTable from "@/views/orders/components/OrdersTable.vue";
+import OrderItemsTable from "@/views/orders/components/OrderItemsTable.vue";
+import {useRoute} from "vue-router";
 
-const orders = ref()
+const route = useRoute()
 
-function getOrders(): void
+const order = ref()
+
+function getOrderById(): void
 {
-  callAxios('/api/orders')
-      ?.then(response => {
+  callAxios(`/api/orders/${route.params.id}`)
+      .then(response => {
         console.log(response.data.data)
-        orders.value = response.data.data
+        order.value = response.data.data
       })
 }
 
-onMounted(getOrders)
+onMounted(getOrderById)
 </script>
 
 <template>
@@ -30,7 +34,7 @@ onMounted(getOrders)
 
         <div class="w-full">
 
-          <OrdersTable :data="orders" />
+          <OrderItemsTable v-if="order" :data="order" />
 
         </div>
 

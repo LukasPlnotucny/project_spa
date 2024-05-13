@@ -3,14 +3,15 @@
 import { callAxios } from "@/axios/callAxios";
 import {onMounted, onUpdated, ref} from "vue";
 import PageContent from "@/components/PageContent.vue";
+import ItemsTable from "@/views/items/components/ItemsTable.vue";
 
-const orders = ref()
+const items = ref()
 
 function getItems(): void
 {
   callAxios('/api/items')
       ?.then(response => {
-        orders.value = response.data.data
+        items.value = response.data.data
       })
 }
 
@@ -27,11 +28,7 @@ onUpdated(getItems)
 
       <template #content>
         <div class="w-full">
-          <DataTable :value="orders">
-            <PrimeColumn field="id" header="#"></PrimeColumn>
-            <PrimeColumn field="name" header="Name"></PrimeColumn>
-            <PrimeColumn field="price" header="Price"></PrimeColumn>
-          </DataTable>
+          <ItemsTable :data="items" />
         </div>
       </template>
 
