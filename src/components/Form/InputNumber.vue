@@ -1,15 +1,19 @@
 <script setup lang="ts">
-interface Defaults {}
+interface Defaults {
+  fraction: boolean
+}
 
 const model = defineModel()
 
-withDefaults(defineProps<Defaults>(), {})
+withDefaults(defineProps<Defaults>(), {
+  fraction: true
+})
 
 </script>
 
 <template>
 
   <PrimeInputNumber  v-model="model"
-                     :minFractionDigits="2"/>
+                     :minFractionDigits="fraction ? 2 : 0"/>
 
 </template>

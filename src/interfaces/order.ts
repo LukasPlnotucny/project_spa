@@ -10,6 +10,14 @@ export interface Order {
     items?: Item[];
 }
 
+export interface Item {
+    id: number;
+    name: string;
+    price: number;
+    vat: number;
+    quantity?: number
+}
+
 export interface OrderFormInterface {
     number?: string
     items: ItemOrder[];
